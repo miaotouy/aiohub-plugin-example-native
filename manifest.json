@@ -10,6 +10,7 @@
   },
   "type": "native",
   "native": {
+    "reloadable": true,
     "library": {
       "win32-x64": "target/debug/native_example.dll",
       "win32-arm64": "target/debug/native_example.dll",
