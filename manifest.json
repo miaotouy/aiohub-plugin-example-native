@@ -5,6 +5,7 @@
   "description": "一个展示原生插件能力的示例插件",
   "author": "咕咕",
   "icon": "✨",
+  "tags": ["示例", "原生插件", "系统信息"],
   "host": {
     "appVersion": "1.0.0"
   },
