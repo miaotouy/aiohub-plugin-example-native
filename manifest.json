@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "一个展示原生插件能力的示例插件",
   "author": "咕咕",
-  "icon": "🦉",
+  "icon": "✨",
   "host": {
     "appVersion": "1.0.0"
   },
@@ -54,6 +54,6 @@
   "ui": {
     "displayName": "原生示例",
     "component": "NativeExample.vue",
-    "icon": "🦉"
+    "icon": "✨"
   }
 }
