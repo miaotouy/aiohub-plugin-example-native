@@ -52,7 +52,7 @@
   ],
   "ui": {
     "displayName": "原生示例",
-    "component": "index.vue",
+    "component": "NativeExample.vue",
     "icon": "🦉"
   }
 }

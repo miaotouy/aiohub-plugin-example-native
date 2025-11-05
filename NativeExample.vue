@@ -1,30 +1,35 @@
 <template>
   <div class="native-example-plugin">
-    <h2>原生示例插件</h2>
-    <p>这是一个展示原生插件能力的示例插件</p>
-    
-    <div class="example-section">
-      <h3>加法计算示例</h3>
-      <div class="input-group">
-        <input v-model.number="num1" type="number" placeholder="第一个数字" />
+    <el-card shadow="never" class="example-section">
+      <template #header>
+        <div class="card-header">
+          <strong>加法计算示例</strong>
+        </div>
+      </template>
+      <el-space alignment="center" :size="12">
+        <el-input-number v-model="num1" :controls="false" placeholder="第一个数字" />
         <span>+</span>
-        <input v-model.number="num2" type="number" placeholder="第二个数字" />
-        <button @click="calculateSum">计算</button>
-      </div>
+        <el-input-number v-model="num2" :controls="false" placeholder="第二个数字" />
+        <el-button type="primary" @click="calculateSum">计算</el-button>
+      </el-space>
       <div v-if="sum !== null" class="result">
         结果: {{ sum }}
       </div>
-    </div>
-    
-    <div class="example-section">
-      <h3>系统信息</h3>
-      <button @click="getSystemInfo">获取系统信息</button>
+    </el-card>
+
+    <el-card shadow="never" class="example-section">
+      <template #header>
+        <div class="card-header">
+          <strong>系统信息</strong>
+        </div>
+      </template>
+      <el-button @click="getSystemInfo">获取系统信息</el-button>
       <div v-if="systemInfo" class="system-info">
         <p><strong>操作系统:</strong> {{ systemInfo.os }}</p>
         <p><strong>架构:</strong> {{ systemInfo.arch }}</p>
         <p><strong>插件版本:</strong> {{ systemInfo.plugin_version }}</p>
       </div>
-    </div>
+    </el-card>
   </div>
 </template>
 
@@ -64,56 +69,25 @@ const getSystemInfo = async () => {
 <style scoped>
 .native-example-plugin {
   padding: 20px;
-  max-width: 600px;
-  margin: 0 auto;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .example-section {
-  margin-bottom: 30px;
-  padding: 15px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
+  --el-card-bg-color: var(--container-bg);
+  border: 1px solid var(--border-color);
 }
 
-.input-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-.input-group input {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  width: 100px;
-}
-
-.input-group button {
-  padding: 8px 16px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.input-group button:hover {
-  background-color: #45a049;
-}
-
-.result {
-  padding: 10px;
-  background-color: #f8f9fa;
-  border-radius: 4px;
-  font-weight: bold;
-}
-
+.result,
 .system-info {
   margin-top: 15px;
-  padding: 10px;
-  background-color: #f8f9fa;
+  padding: 10px 15px;
+  background-color: var(--card-bg);
   border-radius: 4px;
+  border: 1px solid var(--border-color-light);
 }
 
 .system-info p {
