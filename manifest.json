@@ -1,0 +1,58 @@
+{
+  "id": "native-example",
+  "name": "原生示例插件",
+  "version": "1.0.0",
+  "description": "一个展示原生插件能力的示例插件",
+  "author": "咕咕",
+  "icon": "🦉",
+  "host": {
+    "appVersion": "1.0.0"
+  },
+  "type": "native",
+  "native": {
+    "library": {
+      "win32-x64": "target/debug/native_example.dll",
+      "win32-arm64": "target/debug/native_example.dll",
+      "darwin-x64": "target/debug/libnative_example.dylib",
+      "darwin-arm64": "target/debug/libnative_example.dylib",
+      "linux-x64": "target/debug/libnative_example.so",
+      "linux-arm64": "target/debug/libnative_example.so"
+    }
+  },
+  "methods": [
+    {
+      "name": "add",
+      "description": "计算两个数字的和",
+      "parameters": [
+        {
+          "name": "a",
+          "type": "number",
+          "description": "第一个数字"
+        },
+        {
+          "name": "b",
+          "type": "number",
+          "description": "第二个数字"
+        }
+      ],
+      "returns": {
+        "type": "number",
+        "description": "两个数字的和"
+      }
+    },
+    {
+      "name": "getSystemInfo",
+      "description": "获取系统信息",
+      "parameters": [],
+      "returns": {
+        "type": "object",
+        "description": "包含系统信息的对象"
+      }
+    }
+  ],
+  "ui": {
+    "displayName": "原生示例",
+    "component": "index.vue",
+    "icon": "🦉"
+  }
+}
