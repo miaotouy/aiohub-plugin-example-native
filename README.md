@@ -1,5 +1,8 @@
 # Native Example - 原生插件示例
 
+> [!NOTE]
+> **本插件是 [AIO Hub](https://github.com/miaotouy/aio-hub) 的插件示例。**
+
 这是一个基于 Rust 的原生插件示例，展示了如何通过动态链接库 (DLL/SO/Dylib) 扩展 AIO Hub 的后端能力。
 
 ## 功能特性
