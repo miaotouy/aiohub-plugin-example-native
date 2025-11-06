@@ -6,9 +6,9 @@ export default defineConfig({
   plugins: [vue()],
   build: {
     lib: {
-      entry: resolve(__dirname, 'index.vue'),
+      entry: resolve(__dirname, 'NativeExample.vue'),
       name: 'NativeExample',
-      fileName: 'index',
+      fileName: 'NativeExample',
       formats: ['es']
     },
     rollupOptions: {
@@ -26,7 +26,7 @@ export default defineConfig({
         }
       }
     },
-    outDir: 'dist-ui',
-    emptyOutDir: true
+    outDir: 'dist',
+    emptyOutDir: false
   }
 });

@@ -99,8 +99,7 @@ function packagePlugin() {
   const distDir = path.join(__dirname, 'dist');
   const libDir = path.join(distDir, 'lib');
 
-  // 清理并创建输出目录
-  fs.emptyDirSync(distDir);
+  // 确保输出目录存在
   fs.ensureDirSync(libDir);
 
   // 复制编译产物
@@ -130,23 +129,26 @@ function packagePlugin() {
   }
 
 
-  // 复制编译后的 Vue 组件
-  const componentJsPath = path.join(__dirname, 'dist-ui', 'index.js');
-  if (fs.existsSync(componentJsPath)) {
-    fs.copySync(componentJsPath, path.join(distDir, 'index.js'));
-    console.log('   ✓ 复制 index.js');
-  } else {
-    console.warn('   ⚠️  未找到 index.js，请先运行 Vue 组件构建');
-  }
-
   // 生成生产环境的 manifest.json
   const manifest = fs.readJsonSync(path.join(__dirname, 'manifest.json'));
 
+  // 验证 Vue 组件并更新 manifest
+  if (manifest.ui && manifest.ui.component) {
+    const componentFileName = manifest.ui.component;
+    const componentBaseName = path.basename(componentFileName, '.vue');
+    const componentJsName = `${componentBaseName}.js`;
+    
+    const componentJsPath = path.join(distDir, componentJsName);
+    if (!fs.existsSync(componentJsPath)) {
+      console.error(`❌ 找不到编译后的 ${componentJsName} 文件`);
+      process.exit(1);
+    }
+    console.log(`   ✓ 发现 ${componentJsName}`);
+    manifest.ui.component = componentJsName;
+  }
+
   // 更新库文件路径为生产环境路径
   manifest.native.library = {};
-  if (manifest.ui && manifest.ui.component) {
-    manifest.ui.component = manifest.ui.component.replace(/\.vue$/, '.js');
-  }
   for (const [targetKey, target] of Object.entries(TARGETS)) {
     const fileName = `native_example-${targetKey}${path.extname(target.libName)}`;
     if (fs.existsSync(path.join(libDir, fileName))) {
@@ -206,10 +208,24 @@ async function createZipArchive(distDir) {
 
 // 主流程
 async function main() {
+  // 清理旧的构建产物
+  console.log('🧹 清理旧的构建产物...');
+  const distDir = path.join(__dirname, 'dist');
+  fs.emptyDirSync(distDir);
+  const distUiDir = path.join(__dirname, 'dist-ui');
+  fs.removeSync(distUiDir);
+  const manifestData = fs.readJsonSync(path.join(__dirname, 'manifest.json'));
+  const zipFileName = `${manifestData.id}-v${manifestData.version}.zip`;
+  const zipPath = path.join(__dirname, zipFileName);
+  fs.removeSync(zipPath);
+  console.log('✅ 清理完成');
+  console.log('');
+  
   // 先构建 Vue 组件
   const vueSuccess = buildVueComponent();
   if (!vueSuccess) {
-    console.warn('⚠️  Vue 组件构建失败，将继续构建 Rust 部分，但 UI 可能无法使用。');
+    console.error('❌ Vue 组件构建失败，无法继续。');
+    process.exit(1);
   }
 
   const buildSuccess = buildRustLibrary();
