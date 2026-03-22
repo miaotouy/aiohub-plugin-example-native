@@ -50,7 +50,7 @@ console.log('');
 function buildVueComponent() {
   console.log('📦 构建 Vue 组件...');
   try {
-    execSync('vite build', {
+    execSync('bun x vite build', {
       stdio: 'inherit',
       cwd: __dirname
     });

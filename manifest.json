@@ -1,13 +1,13 @@
 {
   "id": "native-example",
   "name": "原生示例插件",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "一个展示原生插件能力的示例插件",
-  "author": "咕咕",
+  "author": "AIO Hub Team",
   "icon": "✨",
   "tags": ["示例", "原生插件", "系统信息"],
   "host": {
-    "appVersion": ">=0.4.6",
+    "appVersion": ">=0.5.1",
     "apiVersion": 2
   },
   "type": "native",

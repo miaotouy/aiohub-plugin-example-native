@@ -1,23 +1,23 @@
 {
   "name": "native-example-plugin",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "原生插件示例",
   "type": "module",
   "scripts": {
-    "build": "node build.js",
+    "build": "bun build.js",
     "build:rust": "cargo build",
     "build:rust:release": "cargo build --release",
-    "build:vue": "vite build",
-    "package": "node build.js --release --package",
+    "build:vue": "bun x vite build",
+    "package": "bun build.js --package",
     "dev": "cargo watch -x build",
-    "clean": "cargo clean && rimraf dist dist-ui"
+    "clean": "cargo clean && bun x rimraf dist dist-ui *.zip"
   },
   "keywords": [
     "aio-hub",
     "plugin",
     "native"
   ],
-  "author": "咕咕",
+  "author": "AIO Hub Team",
   "license": "MIT",
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.0",

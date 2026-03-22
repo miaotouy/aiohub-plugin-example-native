@@ -35,19 +35,20 @@
 
 <script setup>
 import { ref } from 'vue';
-import { pluginManager } from '@/services/plugin-manager';
+import { execute } from 'aiohub-sdk';
 
 const num1 = ref(0);
 const num2 = ref(0);
 const sum = ref(null);
 const systemInfo = ref(null);
 
-// 获取插件实例
-const plugin = pluginManager.getPlugin('native-example-dev');
-
 const calculateSum = async () => {
   try {
-    const result = await plugin.add({ a: num1.value, b: num2.value });
+    const result = await execute({
+      service: 'native-example',
+      method: 'add',
+      params: { a: num1.value, b: num2.value }
+    });
     sum.value = result.sum;
   } catch (error) {
     console.error('计算失败:', error);
@@ -57,8 +58,12 @@ const calculateSum = async () => {
 
 const getSystemInfo = async () => {
   try {
-    const info = await plugin.getSystemInfo();
-    systemInfo.value = info;
+    const result = await execute({
+      service: 'native-example',
+      method: 'getSystemInfo',
+      params: {}
+    });
+    systemInfo.value = result;
   } catch (error) {
     console.error('获取系统信息失败:', error);
     systemInfo.value = { error: '获取失败' };
