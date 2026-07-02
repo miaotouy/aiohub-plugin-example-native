@@ -1,51 +1,48 @@
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import { resolve } from 'path';
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import { resolve } from "path";
 
 export default defineConfig({
   plugins: [
     vue(),
     {
-      name: 'aiohub-alias-resolver',
-      enforce: 'pre',
+      name: "aiohub-alias-resolver",
+      enforce: "pre",
       resolveId(source) {
-        if (source.startsWith('@/')) {
-          const isUI = source.includes('/components/') || source.includes('/tools/');
-          return { id: isUI ? 'aiohub-ui' : 'aiohub-sdk', external: true };
+        if (source.startsWith("@/")) {
+          const isUI =
+            source.includes("/components/") || source.includes("/tools/");
+          return { id: isUI ? "aiohub-ui" : "aiohub-sdk", external: true };
         }
         return null;
-      }
-    }
+      },
+    },
   ],
   resolve: {
     alias: {
-      '@': resolve(__dirname, '../../src'),
-      'aiohub-sdk': resolve(__dirname, '../../src/services/plugin-sdk'),
-      'aiohub-ui': resolve(__dirname, '../../src/services/plugin-ui')
-    }
+      "@": resolve(__dirname, "../../src"),
+      "aiohub-sdk": resolve(__dirname, "../../src/services/plugin-sdk"),
+      "aiohub-ui": resolve(__dirname, "../../src/services/plugin-ui"),
+    },
   },
   build: {
     lib: {
-      entry: resolve(__dirname, 'NativeExample.vue'),
-      name: 'NativeExample',
-      fileName: 'NativeExample',
-      formats: ['es']
+      entry: resolve(__dirname, "NativeExample.vue"),
+      name: "NativeExample",
+      fileName: "NativeExample",
+      formats: ["es"],
     },
     rollupOptions: {
       // 外部化依赖，不打包进组件
-      external: [
-        'vue',
-        '@tauri-apps/api/core',
-        'aiohub-sdk',
-        'aiohub-ui'
-      ],
+      external: ["vue", "@tauri-apps/api/core", "aiohub-sdk", "aiohub-ui"],
       output: {
+        codeSplitting: false, // Vite 8 / Rolldown 推荐写法：禁用代码分割，消灭分块 JS，彻底解决相对路径加载问题
         globals: {
-          vue: 'Vue'
-        }
-      }
+          vue: "Vue",
+        },
+      },
     },
-    outDir: 'dist',
-    emptyOutDir: false
-  }
+    outDir: "dist",
+    emptyOutDir: false,
+  },
 });
